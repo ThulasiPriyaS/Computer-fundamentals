@@ -1,6 +1,7 @@
-# Computer Fundamentals — DBMS
+# Computer Fundamentals 
 
-## Introduction
+
+## DBMS
 
 * **Database:** A collection of organized data.
 * **Database Management System (DBMS):** Software that helps store, retrieve, and manage data.
