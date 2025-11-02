@@ -1,101 +1,163 @@
-# Computer-fundamentals
+# Computer Fundamentals — DBMS
 
-DBMS
-Database - collection of organized data
-Database Management System (DBMS) - a software that helps you store, retrieve and manage data
-(eg): MySQL, PostgreSQL, MongoDB, Cassandra, etc
+## Introduction
 
-Types:
-1. SQL - relational database (structured data) - RDBMS (data is fixed)
-MySQL (strict normaliztion), PostgreSQL (sql model with nosql flexibility - allows json, array data also)
-Vertical scaling - improving the performance of the machine that is already running on
-2. NoSQL - unstructured data (document style, key value pair, graphs)
-Mongodb - docs, Redis - key value pair, Neo4j - Graph, Cassandra - column based
-Horizontal scaling - adding more machines to improve performance (like shrading )
+* **Database:** A collection of organized data.
+* **Database Management System (DBMS):** Software that helps store, retrieve, and manage data.
+  **Examples:** MySQL, PostgreSQL, MongoDB, Cassandra, etc.
 
-sharding - the process of splitting a large database into smaller, faster, and more manageable parts. helps mainly in retieval of data. instead of searching through the entire database, since you are spliting it into smaller parts, searching is easy
+---
 
-ACID properties
-  1. A - Atomicity (all or nothing mentality - either its fully successful or if it fails even at one stage we roll back to previous state)
-  2. C - Consistency (when two or more databases are related, any change in a database A must be reflected and syncronized with all the other databases that are related to it)
-  3. I - Isolation (every transaction must happen independently and in an order without interruptions- two operation that are related to each other shouldn't happen simultaenously)
-  4. D - Durability (non repudiation basically - once a transaction is done, it cannot later be claimed that it didn't)
+## Types of Databases
 
-Primary key - a column of values that lets us uniquely indentify the row
-Foreign key - when two or more tables are related, this column lets us identify the properties of both table, using the primary key that's common between them
-Super key - set of column values that helps us uniquely identify a row (includes primary key along with alternative keys)
-Candidate key - subset of super key (minimal set of attributes that are non redundant)
+### 1. SQL — Relational Database (Structured Data)
 
-Normalization 
-removing redundant data 
-1NF - no row should have two values in a column (eliminating duplicates)
-2NF - a non-key attribute must be fully dependent on a primary key, not just a part of it. (no partial dependency)
-3NF - a non-key attribute must only be dependent on a primary key, not any other keys (transitive dependency)
-Boyce-Codd Normal form (BCNF) - a set of values that helps us uniquely identify a row, must have super keys that helps us narrow it down. non existence of this super keys violates bcnf
-Denormalization
-Intentionally adding redudant data to the normalized database for better readability at the end point.
+* Follows **RDBMS** model (data is fixed).
+* **Examples:**
 
-Transactions
-Set of operations that perform as a single unit (must satisfy atomicity property)
-Concurrency
-Multiple operations trying to access the same database
+  * MySQL — strict normalization
+  * PostgreSQL — SQL model with NoSQL flexibility (allows JSON, array data)
+* **Scaling:** Vertical scaling — improving performance of the existing machine.
 
-Locking mechanisms to prevent concurrency
-1. Table level locking - locking the database for a particular user, so no interrupts
-(not very efficient or real-word use case)
-2. Row level locking - locks only the row, instead of the whole table during the transaction
-3. Page level locking - set of rows from a table or multiple tables is locked during a transaction
-4. Pessimistic locking - locking a database at the start of a transaction and releasing it at the end of it
-5. Optimistic locking - no locks. Commits each operations by stacking, even if one transaction fails, it rolls back to the previous state
+### 2. NoSQL — Unstructured Data
 
-Deadlocks
-a situation where two or more transactions are blocked indefinitely, each waiting for a resource that is held by another transaction in the group
+* Data stored in document style, key-value pairs, or graphs.
+* **Examples:**
 
-Necessary conditions of a deadlock
-1. Mutex - only one transaction can hold a database at a time
-2. Hold and wait - the transaction holding the resources may request request for other additional resources held by other transactions
-3. No preemption - cannot forcibly take the resources from a transaction that is holding it
-4. Circular wait - each transaction holds a resource held by another prohibiting any transactions from happpening
+  * MongoDB — Document-based
+  * Redis — Key-value pair
+  * Neo4j — Graph-based
+  * Cassandra — Column-based
+* **Scaling:** Horizontal scaling — adding more machines to improve performance (via sharding).
 
-Ways to handle deadlock
-1. Deadlock avoidance 
-Methods:
-Always follow a order in which the transactions happen
-Use row level locking
-Timeout - for a specified time if no transactions are made then fail all of it
-2. Deadlock detection 
-Wait for graph - (like bankers algorithm) creates a graph to check if the operation has any deadlocks, if so all operations are rejected
-3. Deadlock prevention
-1. Wait die scheme (non premptive) - SJF method (older transactions are meant to wait, while if any younger transaction requests a resource held by a older transaction, it is aborted)
-2. Wound and wait (preemptive) - FCFS method (if the older transaction needs a resource held by the younger transaction, it aborts the younger transaction. if younger needs a resource held by older, then it waits.)
+---
 
-Indexing (not a linear search method)
-this is data structure, that helps us calculate indices for the data from which we can easily retrieve data
-Types
-1. Clustered index - reorders the way records in the table are physically stored. Therefore table can have only one clustered index. The leaf nodes of a clustered index contain the data pages.
-Basically a dictionary data structure
-2. Non-Clustered index - pointer based. The leaf node indicates the row address intead of the data pages
-Index implementation types
-1. B-Tree index - Balanced (Binary trees). logn time to access data
-2. Hashing based index - hashes the primary key of the record, and retrieves a memory address. based on this address we can simply access the data
+## Sharding
 
-CAP theorm
-C - Consistency - All nodes see the same data at the same time
-A - Availability - Every request receives a response, without the guarantee that it contains the most recent write. The system remains operational even if some nodes are down.
-P - Partition tolerance - system can function even if there are network issues or a communication failure between nodes
-Tradeoffs
-CP - during a network crisis, the system priortizes data accuracy. may lead to unavailability of data
-AP - prioritizes availability. may respond with an inaccurate data (not the mot recent write)
-CA - works best when there are no network partitions (generally not used in real life scenarios)
+The process of splitting a large database into smaller, faster, and more manageable parts.
+It helps with data retrieval by reducing search space across smaller partitions.
 
+---
 
+## ACID Properties
 
+| Property            | Meaning                  | Description                                                             |
+| ------------------- | ------------------------ | ----------------------------------------------------------------------- |
+| **A — Atomicity**   | All or nothing           | Either fully successful, or roll back to the previous state on failure. |
+| **C — Consistency** | Data integrity           | Any change in one database must be reflected in related databases.      |
+| **I — Isolation**   | Independent transactions | Each transaction must occur independently without interference.         |
+| **D — Durability**  | Permanent results        | Once a transaction is complete, it remains recorded permanently.        |
 
+---
 
+## Keys in DBMS
 
+| Key Type          | Description                                                                           |
+| ----------------- | ------------------------------------------------------------------------------------- |
+| **Primary Key**   | Uniquely identifies each row in a table.                                              |
+| **Foreign Key**   | Links two or more tables using a common primary key.                                  |
+| **Super Key**     | A set of attributes that uniquely identify a row (includes primary + alternate keys). |
+| **Candidate Key** | Minimal subset of a super key, non-redundant.                                         |
 
+---
 
+## Normalization
 
+**Goal:** Remove redundant data.
 
+| Normal Form         | Description                                                                      |
+| ------------------- | -------------------------------------------------------------------------------- |
+| **1NF**             | No column should have multiple values (eliminate duplicates).                    |
+| **2NF**             | Non-key attributes must depend on the whole primary key (no partial dependency). |
+| **3NF**             | Non-key attributes depend only on the primary key (no transitive dependency).    |
+| **BCNF**            | Every determinant must be a super key.                                           |
+| **Denormalization** | Intentionally adding redundancy for readability and faster queries.              |
 
+---
 
+## Transactions
+
+A **set of operations** performed as a single unit.
+Must satisfy **atomicity** to ensure reliability.
+
+---
+
+## Concurrency
+
+Occurs when multiple operations try to access the same database simultaneously.
+
+### Locking Mechanisms
+
+| Type                    | Description                                                     |
+| ----------------------- | --------------------------------------------------------------- |
+| **Table-level locking** | Locks the entire table (inefficient).                           |
+| **Row-level locking**   | Locks only the specific row.                                    |
+| **Page-level locking**  | Locks a set of rows or pages.                                   |
+| **Pessimistic locking** | Locks resources at the start of a transaction until completion. |
+| **Optimistic locking**  | No locks — commits all operations, rolling back if any fail.    |
+
+---
+
+## Deadlocks
+
+A situation where two or more transactions are waiting for each other’s resources, causing indefinite blocking.
+
+### Necessary Conditions
+
+1. **Mutual Exclusion:** Only one transaction holds a resource at a time.
+2. **Hold and Wait:** A transaction holds one resource while requesting others.
+3. **No Preemption:** Resources cannot be forcibly taken from a transaction.
+4. **Circular Wait:** Transactions form a circular chain of resource requests.
+
+### Deadlock Handling
+
+#### 1. Deadlock Avoidance
+
+* Follow a strict transaction order.
+* Use row-level locking.
+* Apply timeouts for stalled transactions.
+
+#### 2. Deadlock Detection
+
+* Use a **Wait-for Graph** (like Banker's Algorithm) to detect cycles; abort operations if detected.
+
+#### 3. Deadlock Prevention
+
+* **Wait-Die (Non-Preemptive):** Older transactions wait; younger ones abort if needed.
+* **Wound-Wait (Preemptive):** Older transactions abort younger ones holding required resources.
+
+---
+
+## Indexing
+
+A **data structure** that improves data retrieval speed (not a linear search).
+
+### Types
+
+| Type                    | Description                                                                                     |
+| ----------------------- | ----------------------------------------------------------------------------------------------- |
+| **Clustered Index**     | Reorders how records are physically stored; only one per table. Leaf nodes contain actual data. |
+| **Non-Clustered Index** | Uses pointers; leaf nodes contain row addresses, not data pages.                                |
+
+### Index Implementations
+
+* **B-Tree Index:** Balanced binary trees; logarithmic (O(log n)) access time.
+* **Hash Index:** Hashes the primary key to retrieve the data’s memory address.
+
+---
+
+## CAP Theorem
+
+| Property                    | Description                                                         |
+| --------------------------- | ------------------------------------------------------------------- |
+| **Consistency (C)**         | All nodes see the same data at the same time.                       |
+| **Availability (A)**        | Every request gets a response, even if it’s not the latest version. |
+| **Partition Tolerance (P)** | System functions despite network failures between nodes.            |
+
+### Trade-offs
+
+* **CP:** Prioritizes data accuracy (may become unavailable during partition).
+* **AP:** Prioritizes availability (may serve slightly outdated data).
+* **CA:** Works only when there are no network partitions (rare in real-world systems).
+
+---
