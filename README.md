@@ -16,10 +16,10 @@ Horizontal scaling - adding more machines to improve performance (like shrading 
 sharding - the process of splitting a large database into smaller, faster, and more manageable parts. helps mainly in retieval of data. instead of searching through the entire database, since you are spliting it into smaller parts, searching is easy
 
 ACID properties
-A - Atomicity (all or nothing mentality - either its fully successful or if it fails even at one stage we roll back to previous state)
-C - Consistency (when two or more databases are related, any change in a database A must be reflected and syncronized with all the other databases that are related to it)
-I - Isolation (every transaction must happen independently and in an order without interruptions- two operation that are related to each other shouldn't happen simultaenously)
-D - Durability (non repudiation basically - once a transaction is done, it cannot later be claimed that it didn't)
+  A - Atomicity (all or nothing mentality - either its fully successful or if it fails even at one stage we roll back to previous state)
+  C - Consistency (when two or more databases are related, any change in a database A must be reflected and syncronized with all the other databases that are related to it)
+  I - Isolation (every transaction must happen independently and in an order without interruptions- two operation that are related to each other shouldn't happen simultaenously)
+  D - Durability (non repudiation basically - once a transaction is done, it cannot later be claimed that it didn't)
 
 Primary key - a column of values that lets us uniquely indentify the row
 Foreign key - when two or more tables are related, this column lets us identify the properties of both table, using the primary key that's common between them
